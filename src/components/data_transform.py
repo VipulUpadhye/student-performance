@@ -35,7 +35,7 @@ class DataTransform:
             num_pipeline = Pipeline(
                 steps = [
                     ('imputer', SimpleImputer(strategy='median')),
-                    ('scaler', StandardScaler())
+                    ('scaler', StandardScaler(with_mean=False))
                 ]
             )
             logging.info('Numerical columns transformation completed')
@@ -44,7 +44,7 @@ class DataTransform:
                 steps = [
                     ('imputer', SimpleImputer(strategy='most_frequent')),
                     ('ohe_encoder', OneHotEncoder()),
-                    ('scaler', StandardScaler())
+                    ('scaler', StandardScaler(with_mean=False))
                 ]
             )
             logging.info('Categorical columns transformation completed')
@@ -82,15 +82,17 @@ class DataTransform:
             train_feat_transformed = preprocessor.fit_transform(df_train_feat, df_train_label)
             test_feat_transformed = preprocessor.transform(df_test_feat)
 
-            train_feat_arr = np.c_[train_feat_transformed, df_train_label.values]
-            test_feat_arr = np.c_[test_feat_transformed, df_test_label.values]
+            train_arr = np.c_[train_feat_transformed, df_train_label.values]
+            test_arr = np.c_[test_feat_transformed, df_test_label.values]
 
             logging.info('Saving the preprocessor object')
             save_model(file_path=self.data_transform_config.preprocessor_obj_filepath, model_obj=preprocessor)
 
+            logging.info('Data transformation completed')
+
             return(
-                train_feat_arr,
-                test_feat_arr,
+                train_arr,
+                test_arr,
                 self.data_transform_config.preprocessor_obj_filepath
             )
         except Exception as err:
