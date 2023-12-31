@@ -9,15 +9,18 @@ from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from src.components.data_transform import DataTransformConfig, DataTransform
+from src.components.model_train import ModelTrainerConfig, ModelTrainer
+
 
 @dataclass
 class DataIngestionConfig:
     '''
     Dataclass for defining the input variables in the data ingestion task.
     '''
-    train_data_path: str = Path('artifacts').joinpath('train.csv')
-    test_data_path: str = Path('artifacts').joinpath('test.csv')
-    raw_data_path: str = Path('artifacts').joinpath('raw_data.csv')
+    train_data_path = Path('artifacts').joinpath('train.csv')
+    test_data_path = Path('artifacts').joinpath('test.csv')
+    raw_data_path = Path('artifacts').joinpath('raw_data.csv')
 
 
 class DataIngestion:
@@ -63,3 +66,15 @@ class DataIngestion:
         except Exception as err:
             logging.info('Error in data ingestion task!!')
             raise CustomException(err, sys)
+
+
+if __name__ == '__main__':
+    data_ingest = DataIngestion()
+    train_data_path, test_data_path = data_ingest.init_data_ingest()
+
+    data_transform = DataTransform()
+    train_arr, test_arr, _ = data_transform.init_data_transform(train_data_path, test_data_path)
+
+    model_trainer = ModelTrainer()
+    best_model_name, best_score = model_trainer.init_model_trainer(train_arr, test_arr)
+    print(f'Best model is {best_model_name} with R2 score of {best_score} on test set')
