@@ -23,6 +23,13 @@ def save_model(file_path, model_obj):
     except Exception as err:
         raise CustomException(err, sys)
     
+def load_model(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            return joblib.load(file)
+    except Exception as err:
+        raise CustomException(err, sys)
+    
 def model_eval(X_train: ArrayLike, y_train: ArrayLike, X_test: ArrayLike, y_test: ArrayLike, models_dict: Dict[str, Any]) -> Dict[str, float]:
     '''
     Function to evaluate the performance of given models on the test dataset
