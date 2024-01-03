@@ -3,18 +3,25 @@ import sys
 sys.path.append(str(Path(__file__).parent.joinpath('src').resolve()))
 
 from flask import Flask, request, render_template
+from flask_cors import CORS, cross_origin
 
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+@cross_origin()
+def home_page():
+    return render_template('index.html')
+
+@app.route('/predict', methods=['GET', 'POST'])
+@cross_origin()
 def predict_data():
     if request.method == 'GET':
-        return render_template('home.html')
+        return render_template('index.html')
     else:
-        # Read all the data from the home.html form
+        # Read all the data from the index.html form
         data = CustomData(
             gender=request.form.get('gender'),
             race_ethnicity=request.form.get('race_ethnicity'),
@@ -34,7 +41,7 @@ def predict_data():
         results = pred_pipeline.predict(pred_df)
 
         # Return the results to form
-        return render_template('home.html', results=round(results[0], ndigits=2))
+        return render_template('index.html', results=round(results[0], ndigits=2))
     
 
 if __name__ == '__main__':
