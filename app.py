@@ -3,7 +3,6 @@ import sys
 sys.path.append(str(Path(__file__).parent.joinpath('src').resolve()))
 
 from flask import Flask, request, render_template
-from flask_cors import CORS, cross_origin
 
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
@@ -11,12 +10,10 @@ from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 app = Flask(__name__)
 
 @app.route('/')
-@cross_origin()
 def home_page():
     return render_template('index.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
-@cross_origin()
 def predict_data():
     if request.method == 'GET':
         return render_template('performance.html')
