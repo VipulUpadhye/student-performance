@@ -19,9 +19,9 @@ def home_page():
 @cross_origin()
 def predict_data():
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('performance.html')
     else:
-        # Read all the data from the index.html form
+        # Read all the data from the performance.html form
         data = CustomData(
             gender=request.form.get('gender'),
             race_ethnicity=request.form.get('race_ethnicity'),
@@ -41,7 +41,7 @@ def predict_data():
         results = pred_pipeline.predict(pred_df)
 
         # Return the results to form
-        return render_template('index.html', results=round(results[0], ndigits=2))
+        return render_template('performance.html', results=round(results[0], ndigits=2))
     
 
 if __name__ == '__main__':
