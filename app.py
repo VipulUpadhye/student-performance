@@ -38,8 +38,8 @@ def predict_data():
         results = pred_pipeline.predict(pred_df)
 
         # Return the results to form
-        return render_template('performance.html', results=round(results[0], ndigits=2))
+        return render_template('performance.html', results=results[0])
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
