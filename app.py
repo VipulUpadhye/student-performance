@@ -36,10 +36,11 @@ def predict_data():
         # Call the prediction function to get the predictions
         pred_pipeline = PredictPipeline()
         results = pred_pipeline.predict(pred_df)
+        results = round(results[0], 2)
 
         # Return the results to form
-        return render_template('performance.html', results=results[0])
+        return render_template('performance.html', results=results)
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=8000)
