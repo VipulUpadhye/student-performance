@@ -31,7 +31,6 @@ def predict_data():
 
         # Convert the input form data to a dataframe
         pred_df = data.get_data_as_df()
-        print(pred_df)
 
         # Call the prediction function to get the predictions
         pred_pipeline = PredictPipeline()
@@ -43,4 +42,4 @@ def predict_data():
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=80)
