@@ -18,9 +18,9 @@ class DataIngestionConfig:
     '''
     Dataclass for defining the input variables in the data ingestion task.
     '''
-    train_data_path = Path('artifacts').joinpath('train.csv')
-    test_data_path = Path('artifacts').joinpath('test.csv')
-    raw_data_path = Path('artifacts').joinpath('raw_data.csv')
+    train_data_path = Path('artifacts').joinpath('train.csv').resolve()
+    test_data_path = Path('artifacts').joinpath('test.csv').resolve()
+    raw_data_path = Path('artifacts').joinpath('raw_data.csv').resolve()
 
 
 class DataIngestion:
@@ -42,7 +42,7 @@ class DataIngestion:
         logging.info('Started the data ingestion component')
         try:
             # Read the input data
-            input_data_folder = Path(__file__).parent.parent.parent.joinpath('notebooks/data')
+            input_data_folder = Path(__file__).parent.parent.parent.joinpath('notebooks/data').resolve()
             df = pd.read_csv(input_data_folder.joinpath('stud.csv'))
             logging.info('Read the raw data in dataframe')
 

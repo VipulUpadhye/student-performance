@@ -17,7 +17,7 @@ from sklearn.pipeline import Pipeline
 
 @dataclass
 class DataTransformConfig:
-    preprocessor_obj_filepath = Path('artifacts').joinpath('preprocessor.joblib')
+    preprocessor_obj_filepath = Path('artifacts').joinpath('preprocessor.joblib').resolve()
 
 
 class DataTransform:

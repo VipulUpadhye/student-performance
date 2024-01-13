@@ -17,7 +17,7 @@ from src.utils import save_model, model_eval
 
 @dataclass
 class ModelTrainerConfig:
-    trained_model_filepath = Path('artifacts').joinpath('trained_model.joblib')
+    trained_model_filepath = Path('artifacts').joinpath('trained_model.joblib').resolve()
 
 class ModelTrainer:
     def __init__(self) -> None:
